@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<!--BOOT-->
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Dhun – Music for every mood</title>
+<style>
+:root{--bg:#f3f7fa;--surf:#fff;--surf2:#e6eef4;--ink:#0d2033;--mute:#5b7086;--acc:#0e9f8e;--acc-ink:#fff;--hot:#e58a00;--line:#d3dee7;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0c1a2b;--surf:#152840;--surf2:#1d3552;--ink:#eaf3fb;--mute:#8fa8c0;--acc:#2dd4bf;--acc-ink:#062a26;--hot:#ffb547;--line:#25405f}}
+:root[data-theme="dark"]{--bg:#0c1a2b;--surf:#152840;--surf2:#1d3552;--ink:#eaf3fb;--mute:#8fa8c0;--acc:#2dd4bf;--acc-ink:#062a26;--hot:#ffb547;--line:#25405f}
+*{box-sizing:border-box;margin:0}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{background:var(--bg);color:var(--ink);font-family:"Poppins","Segoe UI",system-ui,sans-serif;padding-bottom:150px}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);display:flex;gap:12px;align-items:center;padding:12px 16px;border-bottom:1px solid var(--line);flex-wrap:wrap}
+.logo{font-weight:700;font-size:1.4rem;letter-spacing:-.02em}.logo b{color:var(--acc)}
+.search{flex:1;min-width:180px;background:var(--surf2);border-radius:999px;border:0;padding:10px 16px;color:var(--ink);font:inherit}
+.tabs{display:flex;gap:4px}.tabs button{padding:8px 14px;border-radius:999px;color:var(--mute)}
+.tabs button[aria-pressed=true]{background:var(--ink);color:var(--bg)}
+main{max-width:980px;margin:0 auto;padding:16px}
+h2{font-size:1.15rem;margin:22px 0 10px}
+.chips{display:flex;gap:8px;overflow-x:auto;padding-bottom:4px}
+.chip{padding:7px 16px;border-radius:999px;border:1px solid var(--line);white-space:nowrap;background:var(--surf)}
+.chip[aria-pressed=true]{background:var(--acc);color:var(--acc-ink);border-color:var(--acc)}
+.hero{display:flex;gap:18px;align-items:center;padding:20px;border-radius:20px;background:linear-gradient(120deg,var(--surf2),var(--surf));margin-top:14px}
+.hero .art{width:120px;height:120px;flex:none;border-radius:16px}
+.hero h1{font-size:1.5rem;line-height:1.2}.hero p{color:var(--mute);margin:4px 0 12px}
+.btn{background:var(--acc);color:var(--acc-ink);padding:10px 22px;border-radius:999px;font-weight:600}
+.row{display:flex;gap:14px;overflow-x:auto;padding-bottom:8px}
+.card{width:150px;flex:none;text-align:left}
+.card .art{width:150px;height:150px;border-radius:14px;margin-bottom:6px}
+.art{background:linear-gradient(135deg,hsl(var(--h) 70% 55%),hsl(calc(var(--h) + 50) 70% 35%));position:relative}
+.art::after{content:"";position:absolute;inset:32%;border-radius:50%;background:rgba(255,255,255,.22)}
+.t{font-weight:600;font-size:.92rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.s{color:var(--mute);font-size:.8rem}
+.list{background:var(--surf);border-radius:16px;overflow:hidden}
+.item{display:flex;align-items:center;gap:12px;padding:10px 14px;border-bottom:1px solid var(--line);width:100%;text-align:left}
+.item:last-child{border:0}.item .art{width:44px;height:44px;border-radius:8px;flex:none}
+.item .m{flex:1;min-width:0}.item.on .t{color:var(--acc)}
+.empty{padding:28px;text-align:center;color:var(--mute)}
+.heart{font-size:1.2rem;padding:4px 8px;color:var(--mute)}.heart.on{color:var(--hot)}
+footer.pl{position:fixed;left:0;right:0;bottom:0;padding:10px 16px calc(10px + env(safe-area-inset-bottom,0px));background:var(--surf);border-top:1px solid var(--line);z-index:6}
+.pl .in{max-width:980px;margin:0 auto;display:grid;grid-template-columns:1fr auto 1fr;gap:12px;align-items:center}
+.now{display:flex;gap:10px;align-items:center;min-width:0}.now .art{width:44px;height:44px;border-radius:8px;flex:none}
+.ctl{display:flex;gap:6px;align-items:center}.ctl button{width:38px;height:38px;border-radius:50%;font-size:1.1rem}
+.ctl .go{width:46px;height:46px;background:var(--acc);color:var(--acc-ink)}
+.vol{justify-self:end;display:flex;gap:6px;align-items:center;color:var(--mute)}
+.bar{grid-column:1/-1;display:flex;gap:8px;align-items:center;font-size:.75rem;color:var(--mute)}
+input[type=range]{accent-color:var(--acc);flex:1;min-width:0}
+.vol input{width:90px;flex:none}
+@media(max-width:640px){.pl .in{grid-template-columns:1fr auto}.vol{display:none}.hero .art{width:80px;height:80px}.hero h1{font-size:1.2rem}}
+@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+<header>
+  <div class="logo">dhun<b>.</b></div>
+  <input class="search" id="q" type="search" placeholder="Search songs, artists, moods" aria-label="Search">
+  <nav class="tabs" aria-label="Library"><button id="tHome" aria-pressed="true">Discover</button><button id="tLiked" aria-pressed="false">Liked</button><button id="tPl" aria-pressed="false">Library</button><button id="tQ" aria-pressed="false">Queue</button></nav><button class="pill" data-a="lg" aria-label="Switch language">EN / हिं</button><button class="pill" id="prem" data-a="prem">Go Premium</button><button class="pill" id="acct" data-a="acct">Sign in</button>
+</header>
+<main>
+  <div id="home"><div class="chips" id="chips" role="group" aria-label="Filter by language or genre"></div>
+  <section class="hero" id="hero"></section>
+  <h2 id="h2a">Trending now</h2>
+  <div class="row" id="trend"></div>
+  <h2 id="h2b">All songs</h2>
+  <div class="list" id="list"></div></div><div id="extra" hidden></div>
+</main>
+<footer class="pl">
+  <div class="in">
+    <div class="now"><div class="art" id="pArt" style="--h:180"></div><div style="min-width:0"><div class="t" id="pT">Pick a song</div><div class="s" id="pS">Tap any track to start</div></div><button class="heart" id="pHeart" aria-label="Like song">♡</button></div>
+    <div class="ctl"><button id="prev" aria-label="Previous">⏮</button><button id="play" class="go" aria-label="Play">▶</button><button id="next" aria-label="Next">⏭</button></div>
+    <div class="vol"><span>🔊</span><input id="vol" type="range" min="0" max="1" step="0.01" value="0.7" aria-label="Volume"></div>
+    <div class="bar"><span id="cur">0:00</span><input id="seek" type="range" min="0" max="1" step="0.001" value="0" aria-label="Seek"><span id="dur">0:00</span></div>
+  </div>
+</footer>
+<script>
+/* ---------- Mock "server": swap these methods for real fetch() calls to your own backend ---------- */
+const SEED=[
+{id:"t1",title:"Subah Ki Chai",artist:"Aarav & The Loop",lang:"Hindi",h:35,root:57,sc:[0,2,4,7,9],bpm:96,w:"triangle"},
+{id:"t2",title:"Ganga Kinare",artist:"Meera Sen",lang:"Hindi",h:190,root:55,sc:[0,2,3,7,8],bpm:78,w:"sine"},
+{id:"t3",title:"Bhangra Boulevard",artist:"Jazzy Gill",lang:"Punjabi",h:20,root:59,sc:[0,2,4,7,9],bpm:128,w:"sawtooth"},
+{id:"t4",title:"Sohni Raat",artist:"Harpreet Dosanjh",lang:"Punjabi",h:300,root:52,sc:[0,3,5,7,10],bpm:88,w:"triangle"},
+{id:"t5",title:"Marina Sunset",artist:"Kavya Iyer",lang:"Tamil",h:330,root:60,sc:[0,2,4,5,7,9],bpm:104,w:"triangle"},
+{id:"t6",title:"Thalattu Remix",artist:"Ilan Beats",lang:"Tamil",h:145,root:50,sc:[0,2,3,5,7],bpm:112,w:"square"},
+{id:"t7",title:"Rain on Chai Stall",artist:"Nimbus Lo-fi",lang:"Lo-fi",h:210,root:53,sc:[0,3,5,7,10],bpm:72,w:"sine"},
+{id:"t8",title:"Late Night Local",artist:"Nimbus Lo-fi",lang:"Lo-fi",h:255,root:55,sc:[0,2,3,7,9],bpm:68,w:"sine"},
+{id:"t9",title:"Aarti Sandhya",artist:"Pt. Devansh Rao",lang:"Devotional",h:48,root:52,sc:[0,2,5,7,9],bpm:64,w:"sine"},
+{id:"t10",title:"Om Shanti Dhun",artist:"Pt. Devansh Rao",lang:"Devotional",h:270,root:50,sc:[0,2,4,7,9],bpm:60,w:"triangle"},
+{id:"t11",title:"Neon Dilli",artist:"Rhea Volt",lang:"Pop",h:160,root:62,sc:[0,2,4,5,7,9,11],bpm:120,w:"sawtooth"},
+{id:"t12",title:"Kal Ki Baat",artist:"Rhea Volt",lang:"Pop",h:5,root:60,sc:[0,2,4,7,9],bpm:108,w:"square"},
+{id:"t13",title:"Brishti Bikel",artist:"Sohini Dey",lang:"Bengali",h:100,root:57,sc:[0,2,3,7,8],bpm:84,w:"triangle"},
+{id:"t14",title:"Vennela Paata",artist:"Karthik Reddy",lang:"Telugu",h:280,root:55,sc:[0,2,4,7,9],bpm:100,w:"triangle"},
+{id:"t15",title:"Paus Ani Tu",artist:"Omkar Kulkarni",lang:"Marathi",h:60,root:53,sc:[0,2,4,5,7,9],bpm:92,w:"sine"}];
+const CATALOG=(window.__BOOT&&window.__BOOT.tracks)||SEED;
+const delay=ms=>new Promise(r=>setTimeout(r,ms));
+const jget=async u=>{const r=await fetch(u);if(!r.ok)throw 0;return r.json()};
+const localList=o=>{const q=(o.q||"").toLowerCase(),lang=o.lang||"All";return CATALOG.filter(t=>(lang==="All"||t.lang===lang)&&(!q||(t.title+" "+t.artist+" "+t.lang).toLowerCase().includes(q)))};
+const Api={
+ async list(o={}){try{return(await jget("/api/tracks?"+new URLSearchParams({q:o.q||"",lang:o.lang||"All"}))).tracks}catch(e){return localList(o)}},
+ async trending(){try{return(await jget("/api/trending")).tracks}catch(e){return[2,6,10,4,0,8].map(i=>CATALOG[i]).filter(Boolean)}},
+ async langs(){return["All",...new Set(CATALOG.map(t=>t.lang))]}
+};
+
+/* ---------- State ---------- */
+let DUR=96;let queue=[],cur=null,playing=false,liked=new Set(),tab="home",lang="All",q="";
+try{liked=new Set(JSON.parse(localStorage.getItem("dhun-liked")||"[]"))}catch(e){}
+const saveLiked=()=>SV("liked",[...liked]);
+const $=id=>document.getElementById(id);
+const fmt=s=>{s=Math.max(0,Math.floor(s));return Math.floor(s/60)+":"+String(s%60).padStart(2,"0")};
+const esc=s=>s.replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+
+/* ---------- Synth audio engine (original tunes, no copyrighted audio) ---------- */
+let ctx,master,rng,nextT=0,startT=0,step=0,timer=null;
+const mb=a=>()=>{a|=0;a=a+0x6D2B79F5|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296};
+const hz=m=>440*Math.pow(2,(m-69)/12);
+function tone(f,t,d,type,v){const o=ctx.createOscillator(),g=ctx.createGain();o.type=type;o.frequency.value=f;
+ g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(v,t+.01);g.gain.exponentialRampToValueAtTime(.0001,t+d);
+ o.connect(g);g.connect(bus);o.start(t);o.stop(t+d+.05)}
+function kick(t){const o=ctx.createOscillator(),g=ctx.createGain();o.frequency.setValueAtTime(140,t);o.frequency.exponentialRampToValueAtTime(40,t+.12);
+ g.gain.setValueAtTime(.5,t);g.gain.exponentialRampToValueAtTime(.001,t+.18);o.connect(g);g.connect(bus);o.start(t);o.stop(t+.2)}
+function playStep(t){const T=cur;if(T.file)return;const n=T.sc.length,sd=60/T.bpm/2;
+ if(step%4===0)kick(t);
+ if(step%8===0||step%8===5)tone(hz(T.root-12+T.sc[(step>>3)%n]*(step%16<8?0:1)),t,sd*3,"sine",.3);
+ if(rng()<.72){const deg=Math.floor(rng()*n*2),m=T.root+12+T.sc[deg%n]+12*Math.floor(deg/n);tone(hz(m),t,sd*(rng()<.3?2.4:1.2),window.lite?"sine":T.w,.11)}
+ if(step%2===1&&!window.lite)tone(9000,t,.03,"square",.015);step++}
+function pump(){while(nextT<ctx.currentTime+.25){playStep(nextT);nextT+=60/cur.bpm/2}}
+function startTrack(T,from=0){
+ if(!ctx){ctx=new (window.AudioContext||window.webkitAudioContext)();master=ctx.createGain();master.gain.value=+$("vol").value;master.connect(ctx.destination)}
+ clearInterval(timer);cur=T;rng=mb([...T.id].reduce((a,c)=>a*31+c.charCodeAt(0),7));step=0;
+ ctx.resume();nextT=ctx.currentTime+.05;startT=ctx.currentTime-from;timer=setInterval(pump,60);playing=true;paint()}
+const pos=()=>ctx&&cur?(cur.file&&window.au?window.au.currentTime:Math.min(DUR,ctx.currentTime-startT)):0;
+function toggle(){if(!cur){if(queue.length)choose(queue[0].id);return}
+ if(playing){ctx.suspend();playing=false;if(window.au)au.pause()}else{ctx.resume();playing=true;if(window.au&&cur.file)au.play()}paint()}
+function choose(id){const T=CATALOG.find(t=>t.id===id);startTrack(T)}
+function skip(d){if(!cur)return;if(d>0&&userQ.length){startTrack(userQ.shift());if(tab==="queue")render();return}const i=queue.findIndex(t=>t.id===cur.id),L=queue.length?queue:CATALOG;
+ const j=((i<0?0:i)+d+L.length)%L.length;startTrack(L[j])}
+
+/* ---------- UI ---------- */
+function art(T,cls=""){return `<div class="art ${cls}" style="--h:${T.h}"></div>`}
+function paint(){
+ const T=cur;$("play").textContent=playing?"⏸":"▶";$("play").setAttribute("aria-label",playing?"Pause":"Play");
+ if(T){$("pT").textContent=T.title;$("pS").textContent=T.artist+" · "+T.lang;$("pArt").style.setProperty("--h",T.h);$("dur").textContent=fmt(DUR);
+  $("pHeart").textContent=liked.has(T.id)?"♥":"♡";$("pHeart").classList.toggle("on",liked.has(T.id))}
+ document.querySelectorAll(".item").forEach(e=>e.classList.toggle("on",T&&e.dataset.id===T.id));}
+async function render(){
+ const list=await Api.list({q,lang}),shown=tab==="liked"?list.filter(t=>liked.has(t.id)):list;queue=shown;
+ const tr=await Api.trending();
+ $("h2b").textContent=tab==="liked"?"Your liked songs":(q||lang!=="All"?"Results":"All songs");
+ $("hero").style.display=$("h2a").style.display=$("trend").style.display=(tab==="home"&&!q&&lang==="All")?"":"none";
+ $("hero").innerHTML=`${art(CATALOG[2])}<div><h1>Fresh beats, every mood</h1><p>Punjabi, Tamil, lo-fi and more. Play something loud.</p><button class="btn" data-play="${CATALOG[2].id}">Play ${esc(CATALOG[2].title)}</button></div>`;
+ $("trend").innerHTML=tr.map(t=>`<button class="card" data-play="${t.id}">${art(t)}<div class="t">${esc(t.title)}</div><div class="s">${esc(t.artist)}</div></button>`).join("");
+ $("list").innerHTML=shown.length?shown.map(t=>`<div class="item" data-id="${t.id}" style="cursor:pointer" data-play="${t.id}">${art(t)}<div class="m"><div class="t">${esc(t.title)}</div><div class="s">${esc(t.artist)} · ${t.lang}</div></div><button class="heart ${liked.has(t.id)?"on":""}" data-like="${t.id}" aria-label="Like ${esc(t.title)}">${liked.has(t.id)?"♥":"♡"}</button></div>`).join("")
+  :`<div class="empty">${tab==="liked"?"No liked songs yet. Tap ♡ on any track to save it here.":"No songs match. Try another word or language."}</div>`;
+ paint()}
+document.addEventListener("click",e=>{
+ const lk=e.target.closest("[data-like]");if(lk){e.stopPropagation();const id=lk.dataset.like;liked.has(id)?liked.delete(id):liked.add(id);saveLiked();render();return}
+ const pl=e.target.closest("[data-play]");if(pl)choose(pl.dataset.play)});
+$("pHeart").onclick=()=>{if(!cur)return;liked.has(cur.id)?liked.delete(cur.id):liked.add(cur.id);saveLiked();render()};
+$("play").onclick=toggle;$("next").onclick=()=>skip(1);$("prev").onclick=()=>skip(-1);
+$("vol").oninput=e=>{if(master)master.gain.value=+e.target.value};
+let seeking=false;$("seek").oninput=e=>{seeking=true;$("cur").textContent=fmt(e.target.value*DUR)};
+$("seek").onchange=e=>{seeking=false;if(cur)startTrack(cur,e.target.value*DUR)};
+$("q").oninput=e=>{q=e.target.value.trim();render()};
+$("tHome").onclick=()=>{tab="home";$("tHome").setAttribute("aria-pressed",true);$("tLiked").setAttribute("aria-pressed",false);render()};
+$("tLiked").onclick=()=>{tab="liked";$("tLiked").setAttribute("aria-pressed",true);$("tHome").setAttribute("aria-pressed",false);render()};
+setInterval(()=>{if(!cur||!playing||seeking)return;const p=pos();$("cur").textContent=fmt(p);$("seek").value=p/DUR;if(p>=DUR)skip(1)},250);
+Api.langs().then(L=>{$("chips").innerHTML=L.map(l=>`<button class="chip" aria-pressed="${l===lang}" data-lang="${l}">${l}</button>`).join("");
+ $("chips").onclick=e=>{const b=e.target.closest("[data-lang]");if(!b)return;lang=b.dataset.lang;
+  document.querySelectorAll(".chip").forEach(c=>c.setAttribute("aria-pressed",c===b));render()}});
+render();
+</script>
+<style>
+.pill{padding:7px 12px;border-radius:999px;background:var(--surf2);font-size:.8rem;white-space:nowrap}
+.ov{position:fixed;inset:0;z-index:20;background:var(--bg);overflow:auto;padding:calc(20px + env(safe-area-inset-top,0px)) 20px calc(20px + env(safe-area-inset-bottom,0px));display:flex;flex-direction:column;align-items:center;gap:12px;text-align:center}
+[hidden]{display:none!important}
+.big{width:min(62vw,240px);aspect-ratio:1;border-radius:24px}
+#ly{min-height:84px;font-size:1.25rem;font-weight:600}#ly small{display:block;color:var(--mute);font-size:.9rem;font-weight:400}
+.fx{display:grid;grid-template-columns:auto 1fr;gap:8px 12px;align-items:center;text-align:left;width:min(100%,420px);font-size:.85rem}
+.fx select{background:var(--surf2);color:var(--ink);border:0;border-radius:8px;padding:6px}
+#sheet{position:fixed;inset:0;z-index:30;background:rgba(0,0,0,.5);display:flex;align-items:flex-end}
+#sh{background:var(--surf);width:100%;max-width:520px;margin:0 auto;border-radius:20px 20px 0 0;padding:16px 16px calc(16px + env(safe-area-inset-bottom,0px))}
+.opt{display:block;width:100%;text-align:left;padding:12px 6px;border-top:1px solid var(--line)}
+#toast{position:fixed;left:50%;transform:translateX(-50%);bottom:170px;background:var(--ink);color:var(--bg);padding:8px 16px;border-radius:999px;z-index:40;font-size:.85rem}
+.more{padding:4px 8px;color:var(--mute);font-size:1.2rem}
+input.f{background:var(--surf2);border:0;border-radius:10px;padding:10px 12px;color:var(--ink);font:inherit;width:100%;max-width:320px}
+.pls{background:var(--surf);border-radius:16px;padding:12px;margin-bottom:12px}
+</style>
+<div id="np" class="ov" hidden>
+  <button class="pill" data-a="npx">Close</button>
+  <div class="art big" id="npArt" style="--h:180"></div>
+  <div><div class="t" id="npT" style="font-size:1.2rem"></div><div class="s" id="npS"></div></div>
+  <div id="ly" aria-live="off"></div>
+  <div class="ctl"><button data-a="prv" aria-label="Previous">⏮</button><button id="npPlay" class="go" data-a="tog" aria-label="Play or pause">▶</button><button data-a="nxt" aria-label="Next">⏭</button></div>
+  <div style="display:flex;gap:8px"><button class="pill" data-a="share">Share</button><button class="pill" id="npDl" data-a="dl">⬇ Save offline</button></div>
+  <div class="fx">
+    <label for="eqb">Bass</label><input id="eqb" type="range" min="-10" max="10" value="0">
+    <label for="eqt">Treble</label><input id="eqt" type="range" min="-10" max="10" value="0">
+    <label for="cf">Crossfade</label><select id="cf"><option value="0">Off</option><option value="1.5" selected>1.5 s</option><option value="4">4 s</option></select>
+    <label for="lv">Level volume</label><input id="lv" type="checkbox" checked>
+    <label for="ds">Data saver</label><input id="ds" type="checkbox">
+  </div>
+</div>
+<div id="sheet" hidden data-a="close"><div id="sh"></div></div>
+<div id="ad" class="ov" hidden><h2>Ad break</h2><p>Your music resumes in <b id="adn">5</b>s</p>
+  <div style="width:min(90%,320px);height:120px;border-radius:16px;background:var(--surf2);display:grid;place-items:center;color:var(--mute)">Sponsored message (demo)</div>
+  <button class="btn" data-a="noads">Remove ads with Premium</button></div>
+<div id="login" class="ov" hidden><h2>Sign in to Dhun</h2>
+  <div id="ls1" style="display:grid;gap:10px;justify-items:center;width:100%"><input class="f" id="ln" placeholder="Your name" autocomplete="name"><input class="f" id="lp" type="tel" placeholder="Mobile number" autocomplete="tel"><button class="btn" data-a="sendotp">Send OTP</button></div>
+  <div id="ls2" hidden style="display:grid;gap:10px;justify-items:center;width:100%"><p class="s">Enter the OTP sent to your number.</p><input class="f" id="lo" inputmode="numeric" placeholder="OTP"><button class="btn" data-a="verify">Verify</button></div>
+  <button class="pill" data-a="lclose">Cancel</button></div>
+<div id="toast" hidden role="status"></div>
+<script>
+/* ---------- Extra features ---------- */
+const LS=(k,d)=>{try{const v=localStorage.getItem("dhun-"+k);return v===null?d:JSON.parse(v)}catch(e){return d}};
+const SV=(k,v)=>{try{localStorage.setItem("dhun-"+k,JSON.stringify(v))}catch(e){}if(window.syncKey)syncKey(k,v)};
+let ui=LS("ui","en"),pls=LS("pls",[]),dl=new Set(LS("dl",[])),hist=LS("hist",{}),user=LS("user",null),prem=LS("prem",false),plays=0,userQ=[],bus,comp,eqL,eqH,adI,adCb;
+window.lite=false;
+const T_=id=>CATALOG.find(t=>t.id===id);
+const I18={en:{tHome:"Discover",tLiked:"Liked",tPl:"Library",tQ:"Queue",picks:"Picked for you",radio:"Radio stations",trend:"Trending now",ph:"Search songs, artists, moods",gm:"Good morning",ga:"Good afternoon",ge:"Good evening"},
+hi:{tHome:"खोजें",tLiked:"पसंदीदा",tPl:"लाइब्रेरी",tQ:"कतार",picks:"आपके लिए",radio:"रेडियो स्टेशन",trend:"अभी ट्रेंडिंग",ph:"गाने, कलाकार, मूड खोजें",gm:"सुप्रभात",ga:"नमस्कार",ge:"शुभ संध्या"}};
+const tx=k=>I18[ui][k];
+const LY={Hindi:["Subah ki dhoop, teri yaad ke saath","Har mod par tu, har raah mein tu","Chal ud chalein, dil ke aasmaan mein"],
+Punjabi:["Chal nachiye, aaj raat nu","Dhol wajda, dil dhadakda","Yaaran di mehfil, rang jamaiye"],
+Tamil:["Alai osai, ennai azhaikuthu","Malai neram, un ninaivu","Kadal karai, kaatril paadal"],
+"Lo-fi":["Rain on the window, slow it down","Steam rising, thoughts drifting","Nowhere to be, nothing to prove"],
+Devotional:["Jai jai, sab ke rakhwale","Deep jale, man shaant hue","Sandhya aayi, aarti gaao"],
+Pop:["City lights, we don't sleep","Kal ki baat, aaj kar le","Hands up, the night is ours"],
+Bengali:["Ekla cholo, mon bhalo","Brishti pore, tapur tupur","Sur bheshe jay, hawar sathe"],
+Telugu:["Chinuku chinuku, manasu paadindi","Vennela raatri, nee tho","Anandam ee kshanam"],
+Marathi:["Majhya mana, gaan gaa","Paus yeto, tuzya sobat","Chal re mitra, sur lagau"]};
+function toast(m){const e=$("toast");e.textContent=m;e.hidden=false;clearTimeout(toast.t);toast.t=setTimeout(()=>e.hidden=true,2200)}
+
+/* audio: EQ, level compressor, crossfade, media session, ads */
+const _s=startTrack;
+startTrack=function(T,from=0){if(from===0&&!prem&&++plays%4===0){ad(()=>go(T,0));return}go(T,from)};
+function fx(){if(!comp)return;eqL.gain.value=+$("eqb").value;eqH.gain.value=+$("eqt").value;const on=$("lv").checked;comp.threshold.value=on?-26:0;comp.ratio.value=on?8:1}
+function go(T,from){
+ if(from===0){hist[T.id]=(hist[T.id]||0)+1;SV("hist",hist)}
+ const first=!ctx;_s(T,from);
+ if(first){comp=ctx.createDynamicsCompressor();eqL=ctx.createBiquadFilter();eqL.type="lowshelf";eqL.frequency.value=200;eqH=ctx.createBiquadFilter();eqH.type="highshelf";eqH.frequency.value=4000;eqL.connect(eqH);eqH.connect(comp);comp.connect(master);fx()}
+ const now=ctx.currentTime,old=bus,c=from===0?+$("cf").value:0;bus=ctx.createGain();bus.connect(eqL);
+ bus.gain.setValueAtTime(c?.0001:1,now);bus.gain.linearRampToValueAtTime(1,now+Math.max(c,.02));
+ if(old){const d=Math.max(c,.05);old.gain.cancelScheduledValues(now);old.gain.setValueAtTime(old.gain.value,now);old.gain.linearRampToValueAtTime(0,now+d);setTimeout(()=>old.disconnect(),(d+.4)*1000)}
+ try{navigator.mediaSession.metadata=new MediaMetadata({title:T.title,artist:T.artist,album:"Dhun · "+T.lang});
+  const h=(a,f)=>navigator.mediaSession.setActionHandler(a,f);h("play",toggle);h("pause",toggle);h("nexttrack",()=>skip(1));h("previoustrack",()=>skip(-1))}catch(e){}}
+["eqb","eqt","lv"].forEach(i=>$(i).oninput=fx);$("ds").onchange=()=>{window.lite=$("ds").checked;toast(lite?"Data saver on: lighter audio":"Data saver off")};
+function ad(cb){adCb=cb;let n=5;$("adn").textContent=n;$("ad").hidden=false;if(ctx)ctx.suspend();if(window.au)au.pause();clearInterval(adI);
+ adI=setInterval(()=>{n--;$("adn").textContent=n;if(n<=0){clearInterval(adI);$("ad").hidden=true;cb()}},1000)}
+
+/* UI hooks */
+const _p=paint;paint=function(){_p();const T=cur;if(T){$("npT").textContent=T.title;$("npS").textContent=T.artist+" · "+T.lang;$("npArt").style.setProperty("--h",T.h)}
+ $("npPlay").textContent=playing?"⏸":"▶";$("npDl").textContent=T&&dl.has(T.id)?"⬇ Saved offline":"⬇ Save offline"};
+setInterval(()=>{if($("np").hidden||!cur)return;const L=LY[cur.lang],i=Math.floor(pos()/DUR*L.length*2)%L.length;$("ly").innerHTML=L[i]+"<small>"+L[(i+1)%L.length]+"</small>"},400);
+$("pT").onclick=$("pArt").onclick=()=>{if(cur){$("np").hidden=false;paint()}};
+$("tPl").onclick=()=>{tab="lists";render()};$("tQ").onclick=()=>{tab="queue";render()};
+const row=(t,b="")=>`<div class="item" data-id="${t.id}" data-play="${t.id}" style="cursor:pointer">${art(t)}<div class="m"><div class="t">${esc(t.title)}</div><div class="s">${esc(t.artist)} · ${t.lang}</div></div>${b}</div>`;
+const card=t=>`<button class="card" data-play="${t.id}">${art(t)}<div class="t">${esc(t.title)}</div><div class="s">${esc(t.artist)}</div></button>`;
+function picks(){const h=new Date().getHours(),want=h<11?["Devotional","Hindi"]:h<17?["Pop","Punjabi","Tamil"]:h<21?["Punjabi","Hindi","Pop"]:["Lo-fi","Devotional"];
+ const fav=Object.entries(hist).sort((a,b)=>b[1]-a[1]).map(x=>(T_(x[0])||{}).lang);
+ const sc=t=>(want.includes(t.lang)?2:0)+(t.lang===fav[0]?3:0)+(fav.includes(t.lang)?1:0)-(hist[t.id]||0)*.3;
+ return [...CATALOG].sort((a,b)=>sc(b)-sc(a)).slice(0,6)}
+const listsHTML=()=>`<h2>${tx("tPl")}</h2><div style="display:flex;gap:8px;margin-bottom:12px"><input class="f" id="plName" placeholder="New playlist name"><button class="btn" data-a="newpl">Create</button></div>`+
+ (pls.length?pls.map(p=>`<div class="pls"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px"><b>${esc(p.name)}</b><span><button class="pill" data-a="playpl" data-x="${p.id}">Play all</button> <button class="pill" data-a="delpl" data-x="${p.id}">Delete</button></span></div>`+
+  (p.ids.length?p.ids.map(id=>row(T_(id),`<button class="more" data-a="rmpl" data-id="${id}" data-x="${p.id}" aria-label="Remove from playlist">✕</button>`)).join(""):`<div class="s">Empty. Use ⋯ on any song to add it.</div>`)+`</div>`).join(""):`<div class="empty">No playlists yet. Name one above to start.</div>`)+
+ `<h2>Downloads</h2><div class="list">${[...dl].map(id=>row(T_(id))).join("")||`<div class="empty">Nothing saved offline yet. Use ⋯ then Save for offline.</div>`}</div>`;
+const queueHTML=()=>`<h2>Now playing</h2><div class="list">${cur?row(cur):`<div class="empty">Nothing playing.</div>`}</div><h2>Up next <button class="pill" data-a="clrq">Clear</button></h2><div class="list">${userQ.map((t,i)=>row(t,`<button class="more" data-a="rmq" data-x="${i}" aria-label="Remove from queue">✕</button>`)).join("")||`<div class="empty">Queue is empty. Use ⋯ then Play next or Add to queue.</div>`}</div>`;
+const _r=render;render=async function(){await _r();extras()};
+function extras(){
+ const ex=tab==="lists"||tab==="queue";$("home").hidden=ex;$("extra").hidden=!ex;
+ Object.entries({home:"tHome",liked:"tLiked",lists:"tPl",queue:"tQ"}).forEach(([k,id])=>{$(id).setAttribute("aria-pressed",tab===k);$(id).textContent=tx(id)});
+ $("q").placeholder=tx("ph");$("acct").textContent=user?user.name+" ✕":"Sign in";$("prem").textContent=prem?"Premium ✓":"Go Premium";
+ if(!$("picks"))$("hero").insertAdjacentHTML("afterend",`<h2 id="picksH"></h2><div class="row" id="picks"></div><h2 id="radioH"></h2><div class="row" id="radio"></div>`);
+ const show=tab==="home"&&!q&&lang==="All";["picksH","picks","radioH","radio"].forEach(i=>$(i).style.display=show?"":"none");
+ const h=new Date().getHours();$("picksH").textContent=(h<12?tx("gm"):h<17?tx("ga"):tx("ge"))+" · "+tx("picks");$("radioH").textContent=tx("radio");$("h2a").textContent=tx("trend");
+ $("picks").innerHTML=picks().map(card).join("");
+ $("radio").innerHTML=[...new Set(CATALOG.map(t=>t.lang))].map((l,i)=>`<button class="card" data-a="radio" data-x="${l}"><div class="art" style="--h:${i*40}"></div><div class="t">${l} Radio</div><div class="s">Endless mix</div></button>`).join("");
+ document.querySelectorAll(".item").forEach(e=>{if(e.dataset.id){e.insertAdjacentHTML("beforeend",`<button class="more" data-a="more" data-id="${e.dataset.id}" aria-label="More options">⋯</button>`);if(dl.has(e.dataset.id))e.querySelector(".t").append(" ⬇")}});
+ if(tab==="lists")$("extra").innerHTML=listsHTML();else if(tab==="queue")$("extra").innerHTML=queueHTML()}
+function sheet(id){const T=T_(id),b=(a,t,x="")=>`<button class="opt" data-a="${a}" data-id="${id}" data-x="${x}">${t}</button>`;
+ $("sh").innerHTML=`<div class="t">${esc(T.title)}</div><div class="s">${esc(T.artist)}</div>`+b("next","Play next")+b("q","Add to queue")+pls.map(p=>b("addpl","Add to playlist: "+esc(p.name),p.id)).join("")+b("dl",dl.has(id)?"Remove download":"Save for offline")+b("share","Share")+b("artist","More by "+esc(T.artist))+`<button class="opt" data-a="close">Cancel</button>`;$("sheet").hidden=false}
+function share(T){const txt=`${T.title} by ${T.artist} on Dhun`,url=location.href;
+ if(navigator.share)navigator.share({title:T.title,text:txt,url}).catch(()=>{});else{try{navigator.clipboard.writeText(txt+" "+url).then(()=>toast("Link copied"),()=>toast(txt))}catch(e){toast(txt)}}}
+function radio(l){const L=CATALOG.filter(t=>t.lang===l).sort(()=>Math.random()-.5);userQ=L.slice(1);startTrack(L[0]);toast(l+" Radio")}
+document.addEventListener("click",e=>{
+ const b=e.target.closest("[data-a]");if(!b||(b.id==="sheet"&&e.target!==b))return;e.stopPropagation();
+ const a=b.dataset.a,x=b.dataset.x,id=b.dataset.id||(cur&&cur.id),T=id&&T_(id),pl=x&&pls.find(p=>p.id===x);
+ switch(a){
+ case"more":sheet(id);return;
+ case"close":$("sheet").hidden=true;return;
+ case"next":userQ.unshift(T);toast("Playing next");break;
+ case"q":userQ.push(T);toast("Added to queue");break;
+ case"addpl":if(!pl.ids.includes(id))pl.ids.push(id);SV("pls",pls);toast("Added to "+pl.name);break;
+ case"dl":dl.has(id)?dl.delete(id):dl.add(id);SV("dl",[...dl]);toast(dl.has(id)?"Saved for offline":"Removed from downloads");break;
+ case"share":if(T)share(T);break;
+ case"artist":q=T.artist;$("q").value=q;tab="home";break;
+ case"radio":radio(x);return;
+ case"newpl":{const n=$("plName").value.trim();if(n){pls.push({id:"p"+Date.now(),name:n,ids:[]});SV("pls",pls)}break}
+ case"playpl":if(pl.ids.length){userQ=pl.ids.slice(1).map(T_);startTrack(T_(pl.ids[0]))}return;
+ case"delpl":pls=pls.filter(p=>p.id!==x);SV("pls",pls);break;
+ case"rmpl":pl.ids=pl.ids.filter(i=>i!==id);SV("pls",pls);break;
+ case"rmq":userQ.splice(+x,1);break;
+ case"clrq":userQ=[];break;
+ case"npx":$("np").hidden=true;return;
+ case"tog":toggle();return;case"prv":skip(-1);return;case"nxt":skip(1);return;
+ case"lg":ui=ui==="en"?"hi":"en";SV("ui",ui);break;
+ case"prem":setPrem(!prem);return;
+ case"noads":clearInterval(adI);$("ad").hidden=true;setPrem(true);adCb();return;
+ case"acct":if(user){signOut();return}$("login").hidden=false;return;
+ case"lclose":$("login").hidden=true;return;
+ case"sendotp":doOtp();return;
+ case"verify":doVerify();return}
+ $("sheet").hidden=true;render()},true);
+render();
+</script>
+
+<script>
+/* ---------- Server connection: auth, sync, real audio, recommendations ---------- */
+var au,auSrc,token=LS("token",null),st={},stT,recAt=0;
+prem=false;if(!token)user=null;
+async function api(url,o={}){
+ const r=await fetch(url,{method:o.method||"GET",headers:{"Content-Type":"application/json",...(token?{Authorization:"Bearer "+token}:{})},body:o.body&&JSON.stringify(o.body)});
+ const d=await r.json().catch(()=>({}));if(!r.ok){const e=new Error(d.error||"Request failed");e.status=r.status;throw e}return d}
+function syncKey(k,v){if(!token||!["liked","pls","dl","hist"].includes(k))return;st[k]=v;clearTimeout(stT);
+ stT=setTimeout(async()=>{const b=st;st={};try{await api("/api/me/data",{method:"PUT",body:b})}catch(e){toast("Sync failed: "+e.message)}},500)}
+async function pull(){if(!token)return;
+ try{const d=await api("/api/me/data");
+  if(!d.liked.length&&!d.pls.length&&!d.dl.length&&!Object.keys(d.hist).length){syncKey("liked",[...liked]);syncKey("pls",pls);syncKey("dl",[...dl]);syncKey("hist",hist)}
+  else{liked=new Set(d.liked);pls=d.pls;dl=new Set(d.dl);hist=d.hist}
+  prem=d.premium;user={name:d.user.name};SV("user",user);render()}
+ catch(e){if(e.status===401){token=null;user=null;SV("token",null);SV("user",null);render()}}}
+async function doOtp(){const phone=$("lp").value.trim();if(!$("ln").value.trim()||phone.length<8)return toast("Enter your name and mobile number");
+ try{const d=await api("/api/auth/otp",{method:"POST",body:{phone}});$("ls1").hidden=true;$("ls2").hidden=false;toast(d.devOtp?"Dev mode OTP: "+d.devOtp:"OTP sent to your phone")}catch(e){toast(e.message)}}
+async function doVerify(){try{const d=await api("/api/auth/verify",{method:"POST",body:{phone:$("lp").value.trim(),otp:$("lo").value.trim(),name:$("ln").value.trim()}});
+ token=d.token;SV("token",token);$("login").hidden=true;$("ls1").hidden=false;$("ls2").hidden=true;await pull();toast("Welcome, "+user.name)}catch(e){toast(e.message)}}
+function signOut(){token=null;user=null;prem=false;SV("token",null);SV("user",null);toast("Signed out");render()}
+async function setPrem(on){if(!token){toast("Sign in to manage Premium");$("login").hidden=false;return}
+ try{prem=(await api("/api/billing/demo",{method:"POST",body:{premium:on}})).premium;toast(prem?"Premium on (demo billing)":"Back to the free tier")}catch(e){toast(e.message)}render()}
+/* real audio files from /media, with synth fallback */
+const _go=go;
+go=function(T,from){DUR=96;_go(T,from);if(au)au.pause();
+ if(from===0&&location.protocol.startsWith("http"))fetch("/api/tracks/"+T.id+"/play",{method:"POST"}).catch(()=>{});
+ if(!T.file)return;
+ if(!au){au=new Audio();au.preload="auto";au.onended=()=>{if(cur&&cur.file)skip(1)};
+  au.onloadedmetadata=()=>{DUR=au.duration||96;$("dur").textContent=fmt(DUR);if(au._from){au.currentTime=au._from;au._from=0}};auSrc=ctx.createMediaElementSource(au)}
+ auSrc.disconnect();auSrc.connect(bus);au._from=from;au.src=T.file;au.play().catch(()=>toast("Tap play to start audio"))};
+/* recommendations from the server */
+const _ex=extras;extras=function(){_ex();recs()};
+async function recs(){if(!$("picks")||$("picks").style.display==="none"||Date.now()-recAt<4000)return;recAt=Date.now();
+ try{const d=await api("/api/recommendations?hour="+new Date().getHours());$("picks").innerHTML=d.ids.map(T_).filter(Boolean).map(card).join("")}catch(e){}}
+pull();
+</script>
+
+</body>
+</html>
