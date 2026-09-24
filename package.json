@@ -1,0 +1,2 @@
+{ "name": "dhun", "version": "1.0.0", "description": "Dhun music streaming app and server", "main": "server.js",
+  "scripts": { "start": "node server.js", "prod": "NODE_ENV=production node server.js" }, "engines": { "node": ">=18" }, "license": "MIT" }

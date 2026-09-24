@@ -1,0 +1,261 @@
+[
+ {
+  "id": "t1",
+  "title": "Subah Ki Chai",
+  "artist": "Aarav & The Loop",
+  "lang": "Hindi",
+  "h": 35,
+  "root": 57,
+  "sc": [
+   0,
+   2,
+   4,
+   7,
+   9
+  ],
+  "bpm": 96,
+  "w": "triangle"
+ },
+ {
+  "id": "t2",
+  "title": "Ganga Kinare",
+  "artist": "Meera Sen",
+  "lang": "Hindi",
+  "h": 190,
+  "root": 55,
+  "sc": [
+   0,
+   2,
+   3,
+   7,
+   8
+  ],
+  "bpm": 78,
+  "w": "sine"
+ },
+ {
+  "id": "t3",
+  "title": "Bhangra Boulevard",
+  "artist": "Jazzy Gill",
+  "lang": "Punjabi",
+  "h": 20,
+  "root": 59,
+  "sc": [
+   0,
+   2,
+   4,
+   7,
+   9
+  ],
+  "bpm": 128,
+  "w": "sawtooth"
+ },
+ {
+  "id": "t4",
+  "title": "Sohni Raat",
+  "artist": "Harpreet Dosanjh",
+  "lang": "Punjabi",
+  "h": 300,
+  "root": 52,
+  "sc": [
+   0,
+   3,
+   5,
+   7,
+   10
+  ],
+  "bpm": 88,
+  "w": "triangle"
+ },
+ {
+  "id": "t5",
+  "title": "Marina Sunset",
+  "artist": "Kavya Iyer",
+  "lang": "Tamil",
+  "h": 330,
+  "root": 60,
+  "sc": [
+   0,
+   2,
+   4,
+   5,
+   7,
+   9
+  ],
+  "bpm": 104,
+  "w": "triangle"
+ },
+ {
+  "id": "t6",
+  "title": "Thalattu Remix",
+  "artist": "Ilan Beats",
+  "lang": "Tamil",
+  "h": 145,
+  "root": 50,
+  "sc": [
+   0,
+   2,
+   3,
+   5,
+   7
+  ],
+  "bpm": 112,
+  "w": "square"
+ },
+ {
+  "id": "t7",
+  "title": "Rain on Chai Stall",
+  "artist": "Nimbus Lo-fi",
+  "lang": "Lo-fi",
+  "h": 210,
+  "root": 53,
+  "sc": [
+   0,
+   3,
+   5,
+   7,
+   10
+  ],
+  "bpm": 72,
+  "w": "sine"
+ },
+ {
+  "id": "t8",
+  "title": "Late Night Local",
+  "artist": "Nimbus Lo-fi",
+  "lang": "Lo-fi",
+  "h": 255,
+  "root": 55,
+  "sc": [
+   0,
+   2,
+   3,
+   7,
+   9
+  ],
+  "bpm": 68,
+  "w": "sine"
+ },
+ {
+  "id": "t9",
+  "title": "Aarti Sandhya",
+  "artist": "Pt. Devansh Rao",
+  "lang": "Devotional",
+  "h": 48,
+  "root": 52,
+  "sc": [
+   0,
+   2,
+   5,
+   7,
+   9
+  ],
+  "bpm": 64,
+  "w": "sine"
+ },
+ {
+  "id": "t10",
+  "title": "Om Shanti Dhun",
+  "artist": "Pt. Devansh Rao",
+  "lang": "Devotional",
+  "h": 270,
+  "root": 50,
+  "sc": [
+   0,
+   2,
+   4,
+   7,
+   9
+  ],
+  "bpm": 60,
+  "w": "triangle"
+ },
+ {
+  "id": "t11",
+  "title": "Neon Dilli",
+  "artist": "Rhea Volt",
+  "lang": "Pop",
+  "h": 160,
+  "root": 62,
+  "sc": [
+   0,
+   2,
+   4,
+   5,
+   7,
+   9,
+   11
+  ],
+  "bpm": 120,
+  "w": "sawtooth"
+ },
+ {
+  "id": "t12",
+  "title": "Kal Ki Baat",
+  "artist": "Rhea Volt",
+  "lang": "Pop",
+  "h": 5,
+  "root": 60,
+  "sc": [
+   0,
+   2,
+   4,
+   7,
+   9
+  ],
+  "bpm": 108,
+  "w": "square"
+ },
+ {
+  "id": "t13",
+  "title": "Brishti Bikel",
+  "artist": "Sohini Dey",
+  "lang": "Bengali",
+  "h": 100,
+  "root": 57,
+  "sc": [
+   0,
+   2,
+   3,
+   7,
+   8
+  ],
+  "bpm": 84,
+  "w": "triangle"
+ },
+ {
+  "id": "t14",
+  "title": "Vennela Paata",
+  "artist": "Karthik Reddy",
+  "lang": "Telugu",
+  "h": 280,
+  "root": 55,
+  "sc": [
+   0,
+   2,
+   4,
+   7,
+   9
+  ],
+  "bpm": 100,
+  "w": "triangle"
+ },
+ {
+  "id": "t15",
+  "title": "Paus Ani Tu",
+  "artist": "Omkar Kulkarni",
+  "lang": "Marathi",
+  "h": 60,
+  "root": 53,
+  "sc": [
+   0,
+   2,
+   4,
+   5,
+   7,
+   9
+  ],
+  "bpm": 92,
+  "w": "sine"
+ }
+]
